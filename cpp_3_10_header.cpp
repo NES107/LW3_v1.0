@@ -186,7 +186,6 @@ void filegenL(string fname,list <results> &students,struct results resultss)
     <<"Final points(Average / Median)"<<endl;
     for(int i=0; i<105; i++)stud<<"-";
     stud<<endl;
-    //for(list<results>::iterator it = students.begin(); it!=students.end(); ++it)
     for(auto const& i : students)
     {
         stud<<i.surname<<setw(22-i.surname.size())<<cout.fill(' ')<<left<<
@@ -213,32 +212,34 @@ void vsplittingL(list <results> &students, struct results &resultss, string &fna
 {
 
 	if(par==1)
-    {/*
+    {
         auto start1 = std::chrono::steady_clock::now();
-        sort(students.begin(),students.end(),sortfm);
-        int i = firstntpV(students);
-        deque <results> passed (students.begin(),students.begin()+i);
-        deque <results> notpassed (students.begin()+i+1,students.end());
-        filegenV(fname2,passed,resultss,passed.size());
-        filegenV(fname3,notpassed,resultss,notpassed.size());
+        students.sort(sortfm);
+        int sz = students.size();
+        int i = firstntpL(students);
+        list<results>passed;
+        passed.splice(passed.begin(),students,
+                         students.begin(),next(students.begin(),i));
+        list<results>notpassed(students.begin(),students.end());
+        filegenL(fname2,passed,resultss);
+        filegenL(fname3,notpassed,resultss);
         auto start4 = std::chrono::steady_clock::now();
         double elapsed_time_total = double(std::chrono::duration_cast <std::chrono::milliseconds> (start4-start1).count());
-        cout<<setprecision(3)<<"Speed of program(MBps): "<<(((sizeof(results)*students.size())/1e6)/(elapsed_time_total/1e3))<<endl;
-        */
+        cout<<setprecision(3)<<"Speed of program(MBps): "<<(((sizeof(results)*sz)/1e6)/(elapsed_time_total/1e3))<<endl;
     }
     else if(par==2)
     {
         auto start1 = std::chrono::steady_clock::now();
         students.sort(sortfm);
+        int sz = students.size();
         int i = firstntpL(students);
         list<results>passed;
         passed.splice(passed.begin(),students,
                          students.begin(),next(students.begin(),i));
-
         filegenL(fname2,passed,resultss);
         filegenL(fname3,students,resultss);
         auto start4 = std::chrono::steady_clock::now();
         double elapsed_time_total = double(std::chrono::duration_cast <std::chrono::milliseconds> (start4-start1).count());
-        cout<<setprecision(3)<<"Speed of program(MBps): "<<(((sizeof(results)*students.size())/1e6)/(elapsed_time_total/1e3))<<endl;
+        cout<<setprecision(3)<<"Speed of program(MBps): "<<(((sizeof(results)*sz)/1e6)/(elapsed_time_total/1e3))<<endl;
     }
 }

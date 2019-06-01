@@ -6,6 +6,7 @@ int main()
     vector <results> studentsv;
     deque <results> studentsd;
     list <results> studentsl;
+    list <results> studentsl2;
     results resultss;
 
     ifstream student_list;
@@ -60,12 +61,14 @@ int main()
         studentsv.push_back (resultss);
         studentsd.push_back (resultss);
         studentsl.push_back (resultss);
+        studentsl2.push_back (resultss);
         resultss.hwm.resize(0);
         linenumber++;
     }
     student_list.close();
     string fname2 = "students_passed.txt";
     string fname3 = "students_notpassed.txt";
+
     cout<<endl<<"FIRST STRATEGY: "<<endl;
     cout<<"Vector parameters: "<<endl;
     vsplittingV(studentsv, resultss, fname1, fname2, fname3, linenumber, 1);
@@ -79,6 +82,7 @@ int main()
     cout<<"Deque parameters: "<<endl;
     vsplittingD(studentsd, resultss, fname1, fname2, fname3, linenumber, 2);
     cout<<"List parameters: "<<endl;
-    vsplittingL(studentsl, resultss, fname1, fname2, fname3, linenumber, 2);
+    vsplittingL(studentsl2, resultss, fname1, fname2, fname3, linenumber, 2);
+
     return 0;
 }
